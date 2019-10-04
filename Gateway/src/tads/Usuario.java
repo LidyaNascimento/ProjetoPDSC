@@ -12,14 +12,14 @@ public class Usuario {
 
 	private Long id;
 
-	private String login;
+	public String login;
 	
 	
 	//@JsonbTransient //Essa annotation impede que o attributo seja inserido na resposta
-	private String senha;
+	public String senha;
 	
 	
-	private String nome;
+	public String nome;
 	
 
 	private String CPF;

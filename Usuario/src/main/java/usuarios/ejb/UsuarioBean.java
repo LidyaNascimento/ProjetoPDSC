@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import usuarios.Usuario.PasswordUtils;
+import usuarios.entidades.Cliente;
 import usuarios.entidades.Usuario;
 
 @Stateless
@@ -20,10 +22,13 @@ public class UsuarioBean {
     private void initializeBean(){
     } 
  
-	public Usuario cadastrarUsuario(String nome, String senha) {
-		Usuario usuario = new Usuario();
+	public Usuario cadastrarUsuario(String nome, String login, String senha, String cpf, String email) {
+		Usuario usuario = new Cliente();
 		usuario.setNome(nome);
-		usuario.setSenha(senha);
+		usuario.setLogin(login);
+		usuario.setSenha(PasswordUtils.digestPassword(senha));
+		usuario.setCPF(cpf);
+		usuario.setEmail(email);
 		entityManager.persist(usuario);
 		return usuario;
 	}
@@ -69,5 +74,6 @@ public class UsuarioBean {
 	public void updateUser(Usuario usuario) {	
 		entityManager.merge(usuario);
 	}
+
 	
 }

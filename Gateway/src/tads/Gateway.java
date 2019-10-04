@@ -42,9 +42,7 @@ public class Gateway {
     @Path("/all_users")
     @JsonTokenNeeded
     public Response getUser() {
-    	String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
-    	
-        
+       
 		Client client = ClientBuilder.newClient();
 		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/usuarios");
 		
@@ -56,7 +54,7 @@ public class Gateway {
 
     
     
-    @GET
+    /*@GET
     @Path("/getUser/{login}/{senha}")
     @Produces(MediaType.APPLICATION_JSON)
     //@Consumes(APPLICATION_FORM_URLENCODED)
@@ -72,6 +70,20 @@ public class Gateway {
 		
 		Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
 		
+		
+		return response;
+    }*/
+    
+    @POST
+    @Path("/cadastrar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response realizarCadastro(Usuario usuario) {
+
+		Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/usuarios/cadastrar");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.get();
 		
 		return response;
     }

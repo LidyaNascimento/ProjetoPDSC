@@ -19,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import usuarios.entidades.Cliente;
 //import usuarios.jwtConfiguration.JsonTokenNeeded;
 import usuarios.entidades.Usuario;
 import usuarios.ejb.UsuarioBean;
@@ -53,20 +54,27 @@ public class UsuarioService {
 		return Response.status(NOT_FOUND).build(); 
 	}
 
-	@GET
-	@Path("/{id}")
-	public Response findById(@PathParam("id") Long id) {
-		Usuario usuario = usuarioBean.getUsuario(id);
-		if (usuario != null)
-			return Response.ok(usuario).build();
-		return Response.status(NOT_FOUND).build();
-	}
 
 	@GET
 	public Response findAllUsuarios() {
 		List<Usuario> allUsuarios = usuarioBean.getAllUsuarios();
 		if (allUsuarios != null)
 			return Response.ok(allUsuarios).build();
+		return Response.status(NOT_FOUND).build();
+	}
+	
+	
+	@POST
+	@Path("/cadastrar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response realizarCadastro(Usuario user) {
+		Usuario usuario = usuarioBean.cadastrarUsuario(user.getNome(), user.getLogin(), user.getSenha(), user.getCPF(), user.getEmail());
+		
+		if(usuario != null) {
+			return Response.ok(usuario).build();
+		}
+		
 		return Response.status(NOT_FOUND).build();
 	}
 	

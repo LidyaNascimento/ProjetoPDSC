@@ -41,6 +41,9 @@ public class Usuario implements Serializable {
 	@Column(name = "email", nullable = false, length = 50)
 	private String email;
 	
+	/*@Column(name = "discriminator", nullable = false, length = 1)
+	private String discriminator;*/
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_nascimento")
 	private Date data_nascimento;
