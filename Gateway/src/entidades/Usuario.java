@@ -1,4 +1,4 @@
-package tads;
+package entidades;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -25,6 +25,9 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import entidades.Cliente;
+import entidades.Login;
+import entidades.Usuario;
 import tads.jwtConfiguration.JsonTokenNeeded;
 import tads.util.JwTokenHelper;
 
@@ -32,7 +35,6 @@ import tads.util.JwTokenHelper;
 @Path("/")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-@Transactional
 public class Gateway {
 	
 	@Context
@@ -42,7 +44,6 @@ public class Gateway {
     @Path("/all_users")
     @JsonTokenNeeded
     public Response getUser() {
-       
 		Client client = ClientBuilder.newClient();
 		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/usuarios");
 		
@@ -54,36 +55,61 @@ public class Gateway {
 
     
     
-    /*@GET
-    @Path("/getUser/{login}/{senha}")
-    @Produces(MediaType.APPLICATION_JSON)
-    //@Consumes(APPLICATION_FORM_URLENCODED)
-    public Response getUser(@PathParam("login") String login, @PathParam("senha") String senha) {
+//    @GET
+//    @Path("/getUser/{login}/{senha}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    //@Consumes(APPLICATION_FORM_URLENCODED)
+//    public Response getUser(@PathParam("login") String login, @PathParam("senha") String senha) {
+//    
+//    	String token = JwTokenHelper.getInstance().generateToken(login, senha);
+//
+//		Client client = ClientBuilder.newClient();
+//		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/usuarios/" + login + "/" + senha + "/" + token);
+//		
+//		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+//		Response response = invocationBuilder.get();
+//		
+//		Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+//		
+//		
+//		return response;
+//    }
     
-    	String token = JwTokenHelper.getInstance().generateToken(login, senha);
+    
+    @POST
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getUser(Login login) {
+    
+    	String token = JwTokenHelper.getInstance().generateToken(login.getLogin(), login.getSenha());
+    	login.setToken(token);
 
 		Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/usuarios/" + login + "/" + senha + "/" + token);
+		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/usuarios/loginUsuario");
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.get();
+		Response response = invocationBuilder.post(Entity.entity(login, MediaType.APPLICATION_JSON));
+		
 		
 		Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
 		
 		
 		return response;
-    }*/
+    }
     
     @POST
-    @Path("/cadastrar")
+    @Path("/cadastrarCliente")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response realizarCadastro(Usuario usuario) {
-
-		Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/usuarios/cadastrar");
+    public Response realizarCadastro(Cliente cliente) {
+    	System.out.println("*************");
+    	
+    	Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/clientes/adicionarCliente");
+		
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.get();
+		Response response = invocationBuilder.post(Entity.entity(cliente, MediaType.APPLICATION_JSON));
 		
 		return response;
     }

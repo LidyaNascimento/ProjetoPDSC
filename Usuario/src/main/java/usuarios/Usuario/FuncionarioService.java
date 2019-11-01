@@ -20,7 +20,6 @@ import usuarios.ejb.FuncionarioBean;
 @Path("/funcionarios")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-@Transactional
 public class FuncionarioService {
 	
 	@EJB

@@ -19,7 +19,6 @@ import usuarios.entidades.Cargo;
 @Path("/cargos")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-@Transactional
 public class CargoService {
 	
 	

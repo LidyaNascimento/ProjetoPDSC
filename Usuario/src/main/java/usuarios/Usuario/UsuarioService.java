@@ -19,15 +19,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import usuarios.entidades.Cliente;
-//import usuarios.jwtConfiguration.JsonTokenNeeded;
-import usuarios.entidades.Usuario;
 import usuarios.ejb.UsuarioBean;
+import usuarios.entidades.Login;
+import usuarios.entidades.Usuario;
+
 
 @Path("/usuarios")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
-@Transactional
 public class UsuarioService {
 	
 	@EJB
@@ -42,16 +41,31 @@ public class UsuarioService {
 //		return Response.status(NOT_FOUND).build();
 //	}
 	
-	@GET
-	@Path("/{login}/{senha}/{token}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(@PathParam("login") String login, @PathParam("senha") String senha, @PathParam("token") String token) {
-		Usuario user = usuarioBean.login(login, senha);
+//	@GET
+//	@Path("/{login}/{senha}/{token}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response login(@PathParam("login") String login, @PathParam("senha") String senha, @PathParam("token") String token) {
+//		Usuario user = usuarioBean.login(login, senha);
+//		
+//		if (user!=null) {
+//			return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+//		}
+//		return Response.status(NOT_FOUND).build(); 
+//	}
+	
+	@POST
+	@Path("/loginUsuario")
+    @Consumes(APPLICATION_JSON)
+	public Response login(Login login) {
+
+		Usuario user = usuarioBean.login(login.getLogin(), login.getSenha());
 		
-		if (user!=null) {
-			return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+		if (user!=null) {	
+			return Response.ok().header(AUTHORIZATION, "Bearer " + login.getToken()).build();
+			
 		}
 		return Response.status(NOT_FOUND).build(); 
+
 	}
 
 
@@ -63,19 +77,5 @@ public class UsuarioService {
 		return Response.status(NOT_FOUND).build();
 	}
 	
-	
-	@POST
-	@Path("/cadastrar")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response realizarCadastro(Usuario user) {
-		Usuario usuario = usuarioBean.cadastrarUsuario(user.getNome(), user.getLogin(), user.getSenha(), user.getCPF(), user.getEmail());
-		
-		if(usuario != null) {
-			return Response.ok(usuario).build();
-		}
-		
-		return Response.status(NOT_FOUND).build();
-	}
 	
 }
