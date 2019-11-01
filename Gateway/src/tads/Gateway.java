@@ -26,6 +26,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import entidades.Cliente;
+import entidades.Funcionario;
 import entidades.Login;
 import entidades.Usuario;
 import tads.jwtConfiguration.JsonTokenNeeded;
@@ -101,8 +102,7 @@ public class Gateway {
     @POST
     @Path("/cadastrarCliente")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response realizarCadastro(Cliente cliente) {
-    	System.out.println("*************");
+    public Response cadastroCliente(Cliente cliente) {
     	
     	Client client = ClientBuilder.newClient();
 		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/clientes/adicionarCliente");
@@ -110,6 +110,21 @@ public class Gateway {
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(cliente, MediaType.APPLICATION_JSON));
+		
+		return response;
+    }
+    
+    @POST
+    @Path("/cadastrarFuncionario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response cadastroFuncionario(Funcionario func) {
+    	
+    	Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/funcionarios/adicionarFuncionario");
+		
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(func, MediaType.APPLICATION_JSON));
 		
 		return response;
     }

@@ -9,11 +9,13 @@ import javax.ejb.EJB;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import usuarios.entidades.Cliente;
 import usuarios.entidades.Funcionario;
 import usuarios.ejb.FuncionarioBean;
 
@@ -41,6 +43,21 @@ public class FuncionarioService {
 		if (allFuncionarios != null)
 			return Response.ok(allFuncionarios).build();
 		return Response.status(NOT_FOUND).build();
+	}
+	
+	@POST
+	@Path("/adicionarFuncionario")
+	@Consumes(APPLICATION_JSON)
+	public Response cadastrarFuncionario(Funcionario func) {
+		Funcionario user = funcionarioBean.cadastrarFuncionario(func);
+		
+		if (user!=null) {	
+			return Response.ok().build();
+			
+		}
+		
+		return Response.status(NOT_FOUND).build(); 
+
 	}
 	
 }

@@ -51,11 +51,8 @@ public class ClienteService {
 	@Consumes(APPLICATION_JSON)
 	public Response cadastrarCliente(Cliente cliente) {
 		Cliente user = clienteBean.cadastrarCliente(cliente);
-		System.out.println("//////////////");
-		System.out.println("user: " + user.getNome());
 		
 		if (user!=null) {	
-			System.out.println("userMetodo: " + user.getNome());
 			return Response.ok().build();
 			
 		}

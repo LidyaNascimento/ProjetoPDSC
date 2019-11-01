@@ -16,8 +16,20 @@ public class Funcionario extends Usuario implements Serializable{
 	
 	@Column(name = "RG", nullable = false, length = 8)
 	private String RG;
+
+
+	public String getRG() {
+		return RG;
+	}
+
+
+	public void setRG(String rG) {
+		RG = rG;
+	}
 	
 	//Adicionar atributo que informa se o funcionario está alocado em algum serviço
+	
+	
 	
 	
 

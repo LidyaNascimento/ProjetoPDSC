@@ -20,14 +20,19 @@ public class FuncionarioBean {
     private void initializeBean(){
     } 
  
-//	public User cadastrarUsuario(String nome, String senha) {
-//		User user = new User();
-//		user.setNome(nome);
-//		user.setSenha(senha);
-//		entityManager.persist(user);
-//		return user;
-//	}
-//
+	public Funcionario cadastrarFuncionario(Funcionario func) {
+		Funcionario user = new Funcionario();
+				
+		user.setNome(func.getNome());
+		user.setLogin(func.getLogin());
+		user.setSenha(func.getSenha());
+		user.setEmail(func.getEmail());
+		user.setCPF(func.getCPF());
+		user.setRG(func.getRG());
+		entityManager.persist(user);
+		return user;
+	}
+
 //	public User login(String nome, String senha) {
 //		String jpql = ("select u from User u where u.nome= :pNome and u.senha= :pSenha");
 //        Query query = entityManager.createQuery(jpql);

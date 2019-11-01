@@ -24,15 +24,10 @@ public class ClienteBean {
 	public Cliente cadastrarCliente(Cliente cliente) {
 		Cliente user = new Cliente();
 		user.setNome(cliente.getNome());
-		System.out.println("Nome: " + cliente.getNome());
 		user.setLogin(cliente.getLogin());
-		System.out.println("Login: " + cliente.getLogin());
 		user.setSenha(cliente.getSenha());
-		System.out.println("Senha: " + cliente.getSenha());
 		user.setEmail(cliente.getEmail());
-		System.out.println("Email: " + cliente.getEmail());
 		user.setCPF(cliente.getCPF());
-		System.out.println("CPF: " + cliente.getCPF());
 		entityManager.persist(user);
 		return user;
 	}
