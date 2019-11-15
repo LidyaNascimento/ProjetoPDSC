@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.*;
 
 import chamados.entidades.Chamado;
+import chamados.entidades.ChamadoItem;
 
 @Stateless
 public class ChamadoBean {
@@ -34,6 +35,12 @@ public class ChamadoBean {
 		if (chamado != null)
             return chamado;
 		return null;
+	} 
+	
+	public Chamado cadastrarChamado(Chamado chamado) {
+		entityManager.persist(chamado);
+		
+		return chamado;
 	} 
 	
 	

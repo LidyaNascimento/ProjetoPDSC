@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 
+import chamados.entidades.Chamado;
 import chamados.entidades.ChamadoItem;
 
 
@@ -20,7 +21,7 @@ public class ChamadoItemBean {
 		
     } 
 	
-	public List<ChamadoItem> getAllCargos() {
+	public List<ChamadoItem> getAllChamadoItens() {
 		String jpql = ("select i from ChamadoItem i");
         Query query = entityManager.createQuery(jpql, ChamadoItem.class);
         List<ChamadoItem> chamadoItens = query.getResultList();
@@ -29,5 +30,19 @@ public class ChamadoItemBean {
         }
 		return null;
 	}
-
+	
+	public ChamadoItem getChamadoItem(Long id) {
+		ChamadoItem chamado_item = entityManager.find(ChamadoItem.class, id);
+		if (chamado_item != null)
+            return chamado_item;
+		
+		return null;
+	} 
+	
+	public ChamadoItem cadastrarChamadoItem(ChamadoItem chamado_item) {
+		entityManager.persist(chamado_item);
+		
+		return chamado_item;
+	} 
+	
 }
