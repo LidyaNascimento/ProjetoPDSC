@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import chamados.entidades.Chamado;
 import chamados.entidades.ChamadoItem;
+import chamados.mapeamento.ChamadoMapeamento;
 
 @Stateless
 public class ChamadoBean {
@@ -37,7 +38,14 @@ public class ChamadoBean {
 		return null;
 	} 
 	
-	public Chamado cadastrarChamado(Chamado chamado) {
+	public Chamado cadastrarChamado(ChamadoMapeamento chamado_mapeamento) {
+		Chamado chamado = new Chamado();
+		
+		chamado.setTitulo(chamado_mapeamento.getTitulo());
+		chamado.setDescricao(chamado_mapeamento.getDescricao());
+		chamado.setUsuario_id(chamado_mapeamento.getUsuario_id());
+		chamado.setEndereco_id(chamado_mapeamento.getEndereco_id());
+		
 		entityManager.persist(chamado);
 		
 		return chamado;

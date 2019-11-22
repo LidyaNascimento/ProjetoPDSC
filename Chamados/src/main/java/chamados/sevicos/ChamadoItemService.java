@@ -15,7 +15,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import chamados.ejb.ChamadoItemBean;
+import chamados.entidades.Chamado;
 import chamados.entidades.ChamadoItem;
+import chamados.mapeamento.ChamadoItemMapeamento;
+import chamados.mapeamento.ChamadoMapeamento;
 
 @Path("/chamado_item")
 @Produces(APPLICATION_JSON)
@@ -30,6 +33,7 @@ public class ChamadoItemService {
 	@Path("/{id}")
 	public Response findById(@PathParam("id") Long id) {
 		ChamadoItem chamado_item = chamadoItemBean.getChamadoItem(id);
+		
 		if (chamado_item != null)
 			return Response.ok(chamado_item).build();
 		
@@ -40,6 +44,7 @@ public class ChamadoItemService {
 	@GET
 	public Response findAllChamados() {
 		List<ChamadoItem> allChamadoItens = chamadoItemBean.getAllChamadoItens();
+		
 		if (allChamadoItens != null)
 			return Response.ok(allChamadoItens).build();
 		
@@ -47,11 +52,12 @@ public class ChamadoItemService {
 	}
 	
 	@POST
-	@Path("/adicionarItemChamado")
+	@Path("/adicionarChamadoItem/{idChamado}")
 	@Consumes(APPLICATION_JSON)
-	public Response adicionarItemChamado(ChamadoItem chamado_item) {
-		ChamadoItem chamadoitem = chamadoItemBean.cadastrarChamadoItem(chamado_item);
-		if (chamado_item != null) {	
+	public Response adicionarItemChamado(ChamadoItemMapeamento chamado_item_mapeamento, @PathParam("idChamado") Long id) {
+		ChamadoItem chamado_item = chamadoItemBean.cadastrarChamadoItem(chamado_item_mapeamento, id);
+		
+		if (chamado_item != null) {	 
 			return Response.ok().build();
 			
 		}

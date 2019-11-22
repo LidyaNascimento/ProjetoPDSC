@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import chamados.ejb.ChamadoBean;
+import chamados.mapeamento.ChamadoMapeamento;
 import chamados.entidades.Chamado;
 import chamados.entidades.ChamadoItem;
 
@@ -31,25 +32,32 @@ public class ChamadoService {
 	@Path("/{id}")
 	public Response findById(@PathParam("id") Long id) {
 		Chamado chamado = chamadoBean.getChamado(id);
+		
 		if (chamado != null)
 			return Response.ok(chamado).build();
+		
 		return Response.status(NOT_FOUND).build();
 	}
 	
 	
 	@GET
+	@Path("/all_chamados")
 	public Response findAllChamados() {
 		List<Chamado> allChamados = chamadoBean.getAllChamados();
+		
 		if (allChamados != null)
 			return Response.ok(allChamados).build();
+		
 		return Response.status(NOT_FOUND).build();
 	}
 	
 	@POST
 	@Path("/adicionarChamado")
 	@Consumes(APPLICATION_JSON)
-	public Response adicionarChamado(Chamado chamado) {
-		Chamado service = chamadoBean.cadastrarChamado(chamado);
+	public Response adicionarChamado(ChamadoMapeamento chamado_mapeamento) {
+		Chamado service = chamadoBean.cadastrarChamado(chamado_mapeamento);
+		
+		
 		if (service != null) {	
 			return Response.ok().build();
 			

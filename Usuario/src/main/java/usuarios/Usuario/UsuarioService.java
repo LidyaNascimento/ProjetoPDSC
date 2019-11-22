@@ -32,26 +32,6 @@ public class UsuarioService {
 	@EJB
     private UsuarioBean usuarioBean;
 
-//	@POST
-//	@Consumes(APPLICATION_FORM_URLENCODED)
-//	public Response create(@FormParam("login") String login, @FormParam("password") String password) {
-//		User user = userBean.cadastrarUsuario(login, PasswordUtils.digestPassword(password));
-//		if (user != null)
-//			return Response.ok(user).build();
-//		return Response.status(NOT_FOUND).build();
-//	}
-	
-//	@GET
-//	@Path("/{login}/{senha}/{token}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Response login(@PathParam("login") String login, @PathParam("senha") String senha, @PathParam("token") String token) {
-//		Usuario user = usuarioBean.login(login, senha);
-//		
-//		if (user!=null) {
-//			return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
-//		}
-//		return Response.status(NOT_FOUND).build(); 
-//	}
 	
 	@POST
 	@Path("/loginUsuario")
