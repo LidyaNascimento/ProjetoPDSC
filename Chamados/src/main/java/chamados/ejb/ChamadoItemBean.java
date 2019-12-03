@@ -56,8 +56,31 @@ public class ChamadoItemBean {
 		chamado_item.setAtualizado_em(chamado_item_mapeamento.getAtualizado_em());
 		
 		entityManager.persist(chamado_item);
+		entityManager.flush();
+//		chamado_item = entityManager.find(ChamadoItem.class, chamado_item.getId());
+		
 		
 		return chamado_item;
 	} 
+	
+	public ChamadoItem atualizarItemChamado(ChamadoItemMapeamento chamado_item_mapeamento) {
+		ChamadoItem chamado_item = new ChamadoItem();
+		
+		chamado_item.setId(chamado_item_mapeamento.getId());
+		chamado_item.setTitulo(chamado_item_mapeamento.getTitulo());
+		chamado_item.setDescricao(chamado_item_mapeamento.getDescricao());
+		chamado_item.setValor(chamado_item_mapeamento.getValor());
+		chamado_item.setChamado_id(chamado_item_mapeamento.getChamado_id());
+		chamado_item.setFuncionario_id(chamado_item_mapeamento.getFuncionario_id());
+		chamado_item.setCriado_em(chamado_item_mapeamento.getCriado_em());
+		chamado_item.setAtualizado_em(chamado_item_mapeamento.getAtualizado_em());
+		
+		entityManager.clear();
+		entityManager.merge(chamado_item);
+		chamado_item = entityManager.find(ChamadoItem.class, chamado_item.getId());
+		
+		return chamado_item;
+	}
+	
 	
 }

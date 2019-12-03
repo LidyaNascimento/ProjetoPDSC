@@ -42,7 +42,7 @@ public class ChamadoItem implements Serializable{
 	
 	//private Status status_chamado;
 	
-	@Column(name = "funcionario_id", nullable = false)
+	@Column(name = "funcionario_id")
 	private Long funcionario_id;
 	
 	@Temporal(TemporalType.TIMESTAMP)

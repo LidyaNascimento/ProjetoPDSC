@@ -3,6 +3,7 @@ package tads;
 
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -44,8 +45,9 @@ public class Gateway {
     @GET
     @Path("/all_users")
     @JsonTokenNeeded
-    public Response getUser() {
-		Client client = ClientBuilder.newClient();
+    public Response getAllUsers() {
+		
+    	Client client = ClientBuilder.newClient();
 		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/usuarios");
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
@@ -54,27 +56,6 @@ public class Gateway {
 		return response;
     }
 
-    
-    
-//    @GET
-//    @Path("/getUser/{login}/{senha}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    //@Consumes(APPLICATION_FORM_URLENCODED)
-//    public Response getUser(@PathParam("login") String login, @PathParam("senha") String senha) {
-//    
-//    	String token = JwTokenHelper.getInstance().generateToken(login, senha);
-//
-//		Client client = ClientBuilder.newClient();
-//		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/usuarios/" + login + "/" + senha + "/" + token);
-//		
-//		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
-//		Response response = invocationBuilder.get();
-//		
-//		Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
-//		
-//		
-//		return response;
-//    }
     
     
     @POST
@@ -129,20 +110,19 @@ public class Gateway {
 		return response;
     }
     
-    /*@POST
-    @Path("/new_user")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addUser(Usuario newUser) {
-
+    @GET
+	@Path("getFuncionario/{id}")
+    public Response getFuncionario(@PathParam("id") Long id) {
 		Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/ms1/api/users"); // alterar
+		WebTarget webTarget = client.target("http://localhost:8080/Usuario/api/funcionarios/" + id );
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.post(Entity.entity(newUser, MediaType.APPLICATION_JSON));
-		 
-		System.out.println(response.getStatus());
-		System.out.println(response.readEntity(String.class));		
-    	
-		return Response.ok().build();
-    }*/
+		Response response = invocationBuilder.get();
+		
+		return response;
+    }
+	
+
+
 }
+    

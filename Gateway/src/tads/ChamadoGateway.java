@@ -34,6 +34,8 @@ public class ChamadoGateway {
     @Path("/all_chamados")
     public Response getChamados() {
 		Client client = ClientBuilder.newClient();
+		
+		
 		WebTarget webTarget = client.target("http://localhost:8080/Chamados/api/chamados/all_chamados");
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
@@ -77,9 +79,9 @@ public class ChamadoGateway {
 	    	
 		
 		Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/Chamados/api/chamado_item/adicionarChamadoItem/" + id);	
+		WebTarget webTargetChamado = client.target("http://localhost:8080/Chamados/api/chamado_item/adicionarChamadoItem/" + id);	
 			
-		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Invocation.Builder invocationBuilder =  webTargetChamado.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(service, MediaType.APPLICATION_JSON));
 		
 			
