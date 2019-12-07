@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 import usuarios.entidades.Cliente;
 import usuarios.entidades.Funcionario;
+import usuarios.mapeamento.FuncionarioMapeamento;
 import usuarios.ejb.FuncionarioBean;
 
 @Path("/funcionarios")
@@ -48,11 +49,12 @@ public class FuncionarioService {
 	@POST
 	@Path("/adicionarFuncionario")
 	@Consumes(APPLICATION_JSON)
-	public Response cadastrarFuncionario(Funcionario func) {
+	public Response cadastrarFuncionario(FuncionarioMapeamento func) {
 		Funcionario user = funcionarioBean.cadastrarFuncionario(func);
 		
-		if (user!=null) {	
-			return Response.ok().build();
+		if (user!=null) {
+			func.setId(user.getId());
+			return Response.ok(user).build();
 			
 		}
 		

@@ -20,8 +20,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import usuarios.ejb.UsuarioBean;
+import usuarios.entidades.Cliente;
 import usuarios.entidades.Login;
 import usuarios.entidades.Usuario;
+import usuarios.mapeamento.ClienteMapeamento;
+import usuarios.mapeamento.UsuarioMapeamento;
 
 
 @Path("/usuarios")
@@ -37,11 +40,12 @@ public class UsuarioService {
 	@Path("/loginUsuario")
     @Consumes(APPLICATION_JSON)
 	public Response login(Login login) {
-
 		Usuario user = usuarioBean.login(login.getLogin(), login.getSenha());
 		
-		if (user!=null) {	
-			return Response.ok().header(AUTHORIZATION, "Bearer " + login.getToken()).build();
+		
+		if (user!=null) {
+			return Response.ok(login).header(AUTHORIZATION, "Bearer " + login.getToken()).build();
+//			return Response.ok().build();
 			
 		}
 		return Response.status(NOT_FOUND).build(); 
@@ -55,6 +59,23 @@ public class UsuarioService {
 		if (allUsuarios != null)
 			return Response.ok(allUsuarios).build();
 		return Response.status(NOT_FOUND).build();
+	}
+	
+	
+	public UsuarioMapeamento assign(Usuario usuario) {
+		UsuarioMapeamento user = new UsuarioMapeamento();
+		
+		user.setNome(usuario.getNome());
+		user.setLogin(usuario.getLogin());
+		user.setSenha(usuario.getSenha());
+		user.setEmail(usuario.getEmail());
+		user.setCPF(usuario.getCPF());
+		user.setData_nascimento(usuario.getData_nascimento());
+		user.setCriado_em(usuario.getCriado_em());
+		user.setAtualizado_em(usuario.getAtualizado_em());
+		
+		return user;
+		
 	}
 	
 	

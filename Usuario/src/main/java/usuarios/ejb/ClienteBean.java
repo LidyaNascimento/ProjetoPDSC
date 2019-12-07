@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import usuarios.entidades.Funcionario;
+import usuarios.mapeamento.ClienteMapeamento;
 import usuarios.entidades.Cliente;
 
 @Stateless
@@ -21,13 +22,17 @@ public class ClienteBean {
     private void initializeBean(){
     } 
  
-	public Cliente cadastrarCliente(Cliente cliente) {
+	public Cliente cadastrarCliente(ClienteMapeamento cliente) {
 		Cliente user = new Cliente();
 		user.setNome(cliente.getNome());
 		user.setLogin(cliente.getLogin());
 		user.setSenha(cliente.getSenha());
 		user.setEmail(cliente.getEmail());
 		user.setCPF(cliente.getCPF());
+		user.setData_nascimento(cliente.getData_nascimento());
+		user.setCriado_em(cliente.getCriado_em());
+		user.setAtualizado_em(cliente.getAtualizado_em());
+		
 		entityManager.persist(user);
 		return user;
 	}

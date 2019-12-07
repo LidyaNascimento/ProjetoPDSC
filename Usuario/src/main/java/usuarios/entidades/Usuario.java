@@ -44,17 +44,14 @@ public class Usuario implements Serializable {
 	/*@Column(name = "discriminator", nullable = false, length = 1)
 	private String discriminator;*/
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "data_nascimento")
-	private Date data_nascimento;
+	private String data_nascimento;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "criado_em")
-	private Date criado_em;
+	private String criado_em;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "atualizado_em")
-	private Date atualizado_em;
+	private String atualizado_em;
 
 
 
@@ -107,38 +104,30 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 
-	public Date getData_nascimento() {
+	public String getData_nascimento() {
 		return data_nascimento;
 	}
 
-	public void setData_nascimento(Date data_nascimento) {
+	public void setData_nascimento(String data_nascimento) {
 		this.data_nascimento = data_nascimento;
 	}
 
-	public Date getCriado_em() {
+	public String getCriado_em() {
 		return criado_em;
 	}
 
-	public void setCriado_em(Date criado_em) {
+	public void setCriado_em(String criado_em) {
 		this.criado_em = criado_em;
 	}
 
-	public Date getAtualizado_em() {
+	public String getAtualizado_em() {
 		return atualizado_em;
 	}
 
-	public void setAtualizado_em(Date atualizado_em) {
+	public void setAtualizado_em(String atualizado_em) {
 		this.atualizado_em = atualizado_em;
 	}
 	
 	
-
-//	public String getToken() {
-//		return token;
-//	}
-//
-//	public void setToken(String token) {
-//		this.token = token;
-//	}
 	
 }

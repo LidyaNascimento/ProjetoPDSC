@@ -38,8 +38,16 @@ public class UsuarioBean {
         Query query = entityManager.createQuery(jpql);
         query.setParameter("pNome", nome);
         query.setParameter("pSenha", senha);
-        Usuario usuario = (Usuario)query.getSingleResult();
-		return usuario;
+        
+        List<Usuario> usuarios = query.getResultList();
+        
+        if(usuarios.isEmpty()) {
+        	return null;
+        }
+        
+        Usuario usuario = (Usuario) usuarios.get(0);
+        return usuario;
+		
 	}
 
 

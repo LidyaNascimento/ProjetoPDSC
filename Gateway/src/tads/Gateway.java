@@ -44,7 +44,7 @@ public class Gateway {
 
     @GET
     @Path("/all_users")
-    @JsonTokenNeeded
+    //@JsonTokenNeeded
     public Response getAllUsers() {
 		
     	Client client = ClientBuilder.newClient();
@@ -73,11 +73,11 @@ public class Gateway {
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(login, MediaType.APPLICATION_JSON));
 		
+		String output = response.readEntity(String.class);
 		
-		Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+		return Response.ok(output).header(AUTHORIZATION, "Bearer " + token).build();
 		
-		
-		return response;
+//		return response;
     }
     
     @POST
@@ -92,7 +92,9 @@ public class Gateway {
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(cliente, MediaType.APPLICATION_JSON));
 		
-		return response;
+		String output = response.readEntity(String.class);
+		
+		return Response.ok(output).build();
     }
     
     @POST
@@ -106,8 +108,9 @@ public class Gateway {
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(func, MediaType.APPLICATION_JSON));
+		String output = response.readEntity(String.class);
 		
-		return response;
+		return Response.ok(output).build();
     }
     
     @GET

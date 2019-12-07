@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import usuarios.entidades.Cliente;
+import usuarios.mapeamento.ClienteMapeamento;
 import usuarios.ejb.ClienteBean;
 
 @Path("/clientes")
@@ -49,11 +50,15 @@ public class ClienteService {
 	@POST
 	@Path("/adicionarCliente")
 	@Consumes(APPLICATION_JSON)
-	public Response cadastrarCliente(Cliente cliente) {
+	public Response cadastrarCliente(ClienteMapeamento cliente) {
 		Cliente user = clienteBean.cadastrarCliente(cliente);
 		
+		System.out.println("ClienteService: " + cliente.getNome());
+		System.out.println("ClienteService: " + cliente.getData_nascimento());
+		
 		if (user!=null) {	
-			return Response.ok().build();
+			cliente.setId(user.getId());
+			return Response.ok(cliente).build();
 			
 		}
 		

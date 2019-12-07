@@ -1,10 +1,10 @@
 package usuarios.mapeamento;
 
-public class Funcionario {
+public class FuncionarioMapeamento extends UsuarioMapeamento{
 	
 	String RG;
 	
-	public Funcionario() {
+	public FuncionarioMapeamento() {
 		
 	}
 

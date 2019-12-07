@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import usuarios.entidades.Funcionario;
+import usuarios.mapeamento.FuncionarioMapeamento;
 
 @Stateless
 public class FuncionarioBean {
@@ -20,7 +21,7 @@ public class FuncionarioBean {
     private void initializeBean(){
     } 
  
-	public Funcionario cadastrarFuncionario(Funcionario func) {
+	public Funcionario cadastrarFuncionario(FuncionarioMapeamento func) {
 		Funcionario user = new Funcionario();
 				
 		user.setNome(func.getNome());
@@ -29,6 +30,9 @@ public class FuncionarioBean {
 		user.setEmail(func.getEmail());
 		user.setCPF(func.getCPF());
 		user.setRG(func.getRG());
+		user.setData_nascimento(func.getData_nascimento());
+		user.setCriado_em(func.getCriado_em());
+		user.setAtualizado_em(func.getAtualizado_em());
 		entityManager.persist(user);
 		return user;
 	}
