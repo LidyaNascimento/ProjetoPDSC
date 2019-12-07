@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Access(AccessType.FIELD) 
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(
-	    name="discriminator",
+	    name="disc_usuario",
 	    discriminatorType=DiscriminatorType.STRING, length = 1)
 public class Usuario implements Serializable {
 

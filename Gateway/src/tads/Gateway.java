@@ -77,7 +77,6 @@ public class Gateway {
 		
 		return Response.ok(output).header(AUTHORIZATION, "Bearer " + token).build();
 		
-//		return response;
     }
     
     @POST

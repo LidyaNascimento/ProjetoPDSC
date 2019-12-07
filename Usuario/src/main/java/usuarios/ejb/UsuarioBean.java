@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import usuarios.Usuario.PasswordUtils;
 import usuarios.entidades.Cliente;
+import usuarios.entidades.Login;
 import usuarios.entidades.Usuario;
 
 @Stateless
@@ -33,22 +34,7 @@ public class UsuarioBean {
 		return usuario;
 	}
 
-	public Usuario login(String nome, String senha) {
-		String jpql = ("select u from Usuario u where u.login= :pNome and u.senha= :pSenha");
-        Query query = entityManager.createQuery(jpql);
-        query.setParameter("pNome", nome);
-        query.setParameter("pSenha", senha);
-        
-        List<Usuario> usuarios = query.getResultList();
-        
-        if(usuarios.isEmpty()) {
-        	return null;
-        }
-        
-        Usuario usuario = (Usuario) usuarios.get(0);
-        return usuario;
-		
-	}
+
 
 
 	public Usuario getUsuario(Long id) {
@@ -77,11 +63,63 @@ public class UsuarioBean {
         Usuario usuario = (Usuario)query.getSingleResult();
 		return usuario;
 	}
+	
+	public Login login(Login login) {
+		List<Usuario> usuarios = loginCliente(login);
+		
+		if(!usuarios.isEmpty()) {
+			login.setDiscriminator("C");  
+			login.setId(usuarios.get(0).getId());
+			return login;
+		}
+		 
+		usuarios = loginFuncionario(login);
+		
+		if(!usuarios.isEmpty()) {
+			login.setDiscriminator("F");  
+			login.setId(usuarios.get(0).getId());
+			return login;
+		}
+        
+		
+		return null;
+	}
 
 
 	public void updateUser(Usuario usuario) {	
 		entityManager.merge(usuario);
 	}
+	
+	public List<Usuario> loginCliente(Login login) {
+		String jpql_cliente = ("SELECT u from Usuario u"
+						+ " WHERE u.login= :pNome"
+						+ " AND u.senha= :pSenha");
+        
+		Query query_cliente = entityManager.createQuery(jpql_cliente);
+		query_cliente.setParameter("pNome", login.getLogin());
+		query_cliente.setParameter("pSenha", login.getSenha());
+        
+        List<Usuario> usuarios = query_cliente.getResultList();
+             
+        return usuarios;
+		
+	}
+	
+	public List<Usuario> loginFuncionario(Login login) {
+		String jpql_func = ("SELECT u from Usuario u"
+				+ " WHERE u.login= :pNome"
+				+ " AND u.senha= :pSenha");
+    	
+		Query query_func = entityManager.createQuery(jpql_func);
+		query_func.setParameter("pNome", login.getLogin());
+		query_func.setParameter("pSenha", login.getSenha());
+        
+        List<Usuario> usuarios = query_func.getResultList();
+        	
+        return usuarios;
+		
+	}
+
 
 	
 }

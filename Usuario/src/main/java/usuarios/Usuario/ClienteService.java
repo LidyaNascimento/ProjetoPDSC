@@ -1,13 +1,12 @@
 package usuarios.Usuario;
 
-import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import usuarios.entidades.Cliente;
+import usuarios.entidades.Login;
 import usuarios.mapeamento.ClienteMapeamento;
 import usuarios.ejb.ClienteBean;
 
@@ -53,8 +53,6 @@ public class ClienteService {
 	public Response cadastrarCliente(ClienteMapeamento cliente) {
 		Cliente user = clienteBean.cadastrarCliente(cliente);
 		
-		System.out.println("ClienteService: " + cliente.getNome());
-		System.out.println("ClienteService: " + cliente.getData_nascimento());
 		
 		if (user!=null) {	
 			cliente.setId(user.getId());
@@ -65,5 +63,6 @@ public class ClienteService {
 		return Response.status(NOT_FOUND).build(); 
 
 	}
+	
 	
 }

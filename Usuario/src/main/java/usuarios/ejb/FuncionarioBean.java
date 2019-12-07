@@ -9,6 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import usuarios.entidades.Funcionario;
+import usuarios.entidades.Login;
+import usuarios.entidades.Usuario;
 import usuarios.mapeamento.FuncionarioMapeamento;
 
 @Stateless
@@ -37,15 +39,46 @@ public class FuncionarioBean {
 		return user;
 	}
 
-//	public User login(String nome, String senha) {
-//		String jpql = ("select u from User u where u.nome= :pNome and u.senha= :pSenha");
-//        Query query = entityManager.createQuery(jpql);
-//        query.setParameter("pNome", nome);
-//        query.setParameter("pSenha", senha);
-//        User usuario = (User)query.getSingleResult();
-//		return usuario;
-//	}
+	public Login login(Login login) {
+		String jpql_cliente = ("SELECT u from Usuario u"
+						+ " WHERE u.login= :pNome "
+						+ "AND u.senha= :pSenha"
+						+ "AND u.discriminator = 'C'");
+        
+		Query query_cliente = entityManager.createQuery(jpql_cliente);
+		query_cliente.setParameter("pNome", login.getLogin());
+		query_cliente.setParameter("pSenha", login.getSenha());
+        
+        List<Usuario> usuarios = query_cliente.getResultList();
+        
+        if(usuarios.isEmpty()) {
+        	String jpql_func = ("SELECT u from Usuario u"
+					+ " WHERE u.login= :pNome "
+					+ "AND u.senha= :pSenha"
+					+ "AND u.discriminator = 'F'");
+        	
+    		Query query_func = entityManager.createQuery(jpql_func);
+    		query_func.setParameter("pNome", login.getLogin());
+    		query_func.setParameter("pSenha", login.getSenha());
+    		
+    		usuarios = query_cliente.getResultList();
+    		
+    		if(usuarios.isEmpty()) {
+            	
+            	return null;
+    		}
+    		
+    		login.setDiscriminator("F");
 
+        } else {
+        	login.setDiscriminator("C");
+        }
+        
+        Usuario usuario = (Usuario) usuarios.get(0);
+        
+        return login;
+		
+	}
 
 	public Funcionario getFuncionario(Long id) {
 		Funcionario funcionario = entityManager.find(Funcionario.class, id);

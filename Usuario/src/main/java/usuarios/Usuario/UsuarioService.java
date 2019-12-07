@@ -40,12 +40,11 @@ public class UsuarioService {
 	@Path("/loginUsuario")
     @Consumes(APPLICATION_JSON)
 	public Response login(Login login) {
-		Usuario user = usuarioBean.login(login.getLogin(), login.getSenha());
-		
+		Login user = usuarioBean.login(login);
 		
 		if (user!=null) {
+			login.setId(user.getId());
 			return Response.ok(login).header(AUTHORIZATION, "Bearer " + login.getToken()).build();
-//			return Response.ok().build();
 			
 		}
 		return Response.status(NOT_FOUND).build(); 

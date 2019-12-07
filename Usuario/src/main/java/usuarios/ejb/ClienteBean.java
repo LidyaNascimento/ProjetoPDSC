@@ -9,6 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import usuarios.entidades.Funcionario;
+import usuarios.entidades.Login;
+import usuarios.entidades.Usuario;
 import usuarios.mapeamento.ClienteMapeamento;
 import usuarios.entidades.Cliente;
 
@@ -36,15 +38,6 @@ public class ClienteBean {
 		entityManager.persist(user);
 		return user;
 	}
-
-//	public User login(String nome, String senha) {
-//		String jpql = ("select u from User u where u.nome= :pNome and u.senha= :pSenha");
-//        Query query = entityManager.createQuery(jpql);
-//        query.setParameter("pNome", nome);
-//        query.setParameter("pSenha", senha);
-//        User usuario = (User)query.getSingleResult();
-//		return usuario;
-//	}
 
 
 	public Cliente getCliente(Long id) {
