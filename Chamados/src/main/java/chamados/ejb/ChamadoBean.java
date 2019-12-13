@@ -51,6 +51,17 @@ public class ChamadoBean {
 		return chamado;
 	} 
 	
+	public List<Chamado> getChamadoByUser(Long id_usuario) {
+		String jpql = ("SELECT c FROM Chamado c"
+						+ " WHERE c.usuario_id = :idUsuario");
+		Query query = entityManager.createQuery(jpql);
+		query.setParameter("idUsuario", id_usuario);
+		
+		List<Chamado> chamados = query.getResultList();
+		
+		return chamados;
+	}
+	
 	
 	
 	

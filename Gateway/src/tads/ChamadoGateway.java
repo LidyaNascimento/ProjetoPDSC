@@ -32,9 +32,10 @@ public class ChamadoGateway {
 	
 	@GET
     @Path("/all_chamados")
+	@Produces(MediaType.APPLICATION_JSON)
+//	@JsonTokenNeeded
     public Response getChamados() {
 		Client client = ClientBuilder.newClient();
-		
 		
 		WebTarget webTarget = client.target("http://localhost:8080/Chamados/api/chamados/all_chamados");
 		
@@ -87,6 +88,20 @@ public class ChamadoGateway {
 			
 		return response;
 	 }
+	 
+		@GET
+	    @Path("/ChamadosByIdUser/{idUser}")
+	    public Response getChamadosByUser(@PathParam("idUser") Long id) {
+			Client client = ClientBuilder.newClient();
+			
+			
+			WebTarget webTarget = client.target("http://localhost:8080/Chamados/api/chamados/chamados_by_idUser/" + id);
+			
+			Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+			Response response = invocationBuilder.get();
+			
+			return response;
+	    }
 	
 	 
 	 

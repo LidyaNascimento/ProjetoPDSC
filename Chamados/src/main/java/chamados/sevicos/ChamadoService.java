@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import chamados.ejb.ChamadoBean;
@@ -66,6 +67,21 @@ public class ChamadoService {
 		return Response.status(NOT_FOUND).build(); 
 
 	}
+	
+	@GET
+	@Path("/chamados_by_idUser/{idUsuario}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findChamadosByIdUser(@PathParam("idUsuario") Long id) {
+		List<Chamado> allChamados = chamadoBean.getChamadoByUser(id);
+		
+		if (!allChamados.isEmpty())
+			return Response.ok(allChamados).build();
+		
+		return Response.status(NOT_FOUND).build();
+	}
+	
+	
+	
 	
 
 }

@@ -4,12 +4,15 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import usuarios.Usuario.PasswordUtils;
 import usuarios.entidades.Cliente;
+import usuarios.entidades.Funcionario;
 import usuarios.entidades.Login;
 import usuarios.entidades.Usuario;
 
@@ -65,19 +68,19 @@ public class UsuarioBean {
 	}
 	
 	public Login login(Login login) {
-		List<Usuario> usuarios = loginCliente(login);
+		List<Cliente> clientes = loginCliente(login);
 		
-		if(!usuarios.isEmpty()) {
+		if(!clientes.isEmpty()) {
 			login.setDiscriminator("C");  
-			login.setId(usuarios.get(0).getId());
+			login.setId(clientes.get(0).getId());
 			return login;
 		}
 		 
-		usuarios = loginFuncionario(login);
+		List<Funcionario> func = loginFuncionario(login);
 		
-		if(!usuarios.isEmpty()) {
+		if(!func.isEmpty()) {
 			login.setDiscriminator("F");  
-			login.setId(usuarios.get(0).getId());
+			login.setId(func.get(0).getId());
 			return login;
 		}
         
@@ -90,32 +93,35 @@ public class UsuarioBean {
 		entityManager.merge(usuario);
 	}
 	
-	public List<Usuario> loginCliente(Login login) {
-		String jpql_cliente = ("SELECT u from Usuario u"
-						+ " WHERE u.login= :pNome"
-						+ " AND u.senha= :pSenha");
-        
-		Query query_cliente = entityManager.createQuery(jpql_cliente);
-		query_cliente.setParameter("pNome", login.getLogin());
-		query_cliente.setParameter("pSenha", login.getSenha());
-        
-        List<Usuario> usuarios = query_cliente.getResultList();
-             
+	public List<Cliente> loginCliente(Login login) {
+		
+		Query query;
+		query = entityManager.createNativeQuery("SELECT * "
+                + "FROM usuarios.cliente c "
+                + "INNER JOIN usuarios.usuario u ON u.id = c.usuario_id "
+                + "WHERE u.login = '" + login.getLogin()
+                + "' AND u.senha = '" + login.getSenha()
+                + "' AND u.disc_usuario = 'C'", Cliente.class);
+       
+        List<Cliente> usuarios = query.getResultList();
+
         return usuarios;
 		
 	}
 	
-	public List<Usuario> loginFuncionario(Login login) {
-		String jpql_func = ("SELECT u from Usuario u"
-				+ " WHERE u.login= :pNome"
-				+ " AND u.senha= :pSenha");
+	public List<Funcionario> loginFuncionario(Login login) {
+		Query query;
+		query = entityManager.createNativeQuery("SELECT * "
+                + "FROM usuarios.funcionario f "
+                + "INNER JOIN usuarios.usuario u ON u.id = f.usuario_id "
+                + "WHERE u.login = '" + login.getLogin()
+                + "' AND u.senha = '" + login.getSenha()
+                + "' AND u.disc_usuario = 'F'", Funcionario.class);
     	
-		Query query_func = entityManager.createQuery(jpql_func);
-		query_func.setParameter("pNome", login.getLogin());
-		query_func.setParameter("pSenha", login.getSenha());
         
-        List<Usuario> usuarios = query_func.getResultList();
+        List<Funcionario> usuarios = query.getResultList();
         	
+        System.out.println("***: " + usuarios.get(0).getLogin());
         return usuarios;
 		
 	}

@@ -1,4 +1,4 @@
-package usuarios.Usuario;
+/*package usuarios.Usuario;
 
 import java.io.IOException;
 
@@ -24,4 +24,4 @@ public class CorsFilter implements ContainerResponseFilter {
             "Access-Control-Allow-Methods", 
             "GET, POST, PUT, DELETE, OPTIONS, HEAD");
     }
-}
+}*/
