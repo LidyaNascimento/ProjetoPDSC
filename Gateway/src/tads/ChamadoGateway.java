@@ -33,7 +33,7 @@ public class ChamadoGateway {
 	@GET
     @Path("/all_chamados")
 	@Produces(MediaType.APPLICATION_JSON)
-//	@JsonTokenNeeded
+	@JsonTokenNeeded
     public Response getChamados() {
 		Client client = ClientBuilder.newClient();
 		
@@ -91,6 +91,7 @@ public class ChamadoGateway {
 	 
 		@GET
 	    @Path("/ChamadosByIdUser/{idUser}")
+		@JsonTokenNeeded
 	    public Response getChamadosByUser(@PathParam("idUser") Long id) {
 			Client client = ClientBuilder.newClient();
 			
